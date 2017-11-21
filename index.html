@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Locations Map</title>
+    <link rel="stylesheet" type="text/css" href="/styles/locations-style.css" />
+  </head>
+  <body>
+    <div class="locations">
+      <div class="locations__header">
+        <div class="locations__title">
+          <h2>Our Care <strong>Network</strong></h2>
+        </div>
+        <div class="locations__intro">
+          <p>Jefferson Health offers an extensive care network with offices throughout Pennsylvania, New Jersey and Delaware. Use the directory and map to find the best location for you including detailed driving directions and further information about services available at each of our offices.</p>
+        </div>
+      </div>
+      <div class="locations__main">
+        <div class="locations__search">
+          <div class="search-locations">
+            <div class="search-locations__input-wrapper">
+              <label for="autocomplete">Address</label>
+              <input id="autocomplete" class="search-locations__address" type="text" placeholder="Address" />
+            </div>
+            <div class="search-locations__distance-wrapper" style="display: none;">
+              <label for="searchLocationsDistance">Within</label>
+              <div class="dropdown-arrow-wrapper">
+                <select id="searchLocationsDistance" class="search-locations__distance">
+                  <option value="1">1mi</option>
+                  <option value="5">5mi</option>
+                  <option value="10">10mi</option>
+                  <option value="25">25mi</option>
+                </select>
+              </div>
+            </div>
+            <div class="search-locations__select-wrapper">
+              <label for="searchLocationsRegion">Region</label>
+              <div class="dropdown-arrow-wrapper">
+                <select id="searchLocationsRegion" class="search-locations__region">
+                  <option value="default">All</option>
+                  <option value="philadelphia">Philadelphia</option>
+                  <option value="montgomery">Montgomery County</option>
+                  <option value="bucks">Bucks County</option>
+                  <option value="jersey">South Jersey</option>
+                </select>
+              </div>
+            </div>
+            <div class="search-locations__select-wrapper">
+              <label for="searchLocationsType">Type</label>
+              <div class="dropdown-arrow-wrapper">
+                <select id="searchLocationsType" class="search-locations__type">
+                  <option value="default">All</option>
+                  <option value="hospitals">Hospitals</option>
+                  <option value="outpatient">Outpatient</option>
+                  <option value="urgent">Urgent Care</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="locations__search-options">
+          <a class="locations__search-reset" href="#">Reset Map</a>
+        </div>
+        <div class="locations__map">
+          <div id="map"></div>
+        </div>
+      </div>
+      <div class="locations__sidebar">
+        <div class="locations-menu">
+          <div class="locations-menu__panel hospitals-menu is-expanded" aria-expanded="false">
+            <div class="locations-menu__tab is-expanded">
+              <h3>Hospitals</h3>
+            </div>
+            <div class="locations-menu__content is-expanded" aria-hidden="false">
+              <ul class="locations-menu__list"></ul>
+            </div>
+          </div>
+          <div class="locations-menu__panel outpatient-menu">
+            <div class="locations-menu__tab is-collapsed">
+              <h3>Outpatient</h3>
+            </div>
+            <div class="locations-menu__content is-collapsed" aria-hidden="true">
+              <ul class="locations-menu__list"></ul>
+            </div>
+          </div>
+          <div class="locations-menu__panel urgentcare-menu">
+            <div class="locations-menu__tab is-collapsed">
+              <h3>Urgent Care</h3>
+            </div>
+            <div class="locations-menu__content is-collapsed" aria-hidden="true">
+              <ul class="locations-menu__list"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/scripts/locations-data.js"></script>
+    <script src="/scripts/locations-map.js"></script>
+    <!-- Jefferson API Key: AIzaSyAdXlaNoumqLdoV5BNGvKes613OO_Zcdyw -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3Ljo3gaxiAY83sPabqHZCa7_GFA7a9Jg&callback=initMap&libraries=places" async defer></script>
+  </body>
+</html>

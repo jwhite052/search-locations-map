@@ -1,0 +1,383 @@
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+  height: 100%;
+  width: 100%;
+  background-color: gray;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Lato, sans-serif;
+}
+.locations {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.locations::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+.locations *:not([class="locations__map"]) {
+  box-sizing: border-box;
+}
+.locations__main {
+  float: left;
+  width: calc(100% - 300px);
+  padding: 0 30px 0 0;
+}
+.locations__main::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.locations__sidebar {
+  padding: 0;
+  float: left;
+  width: calc(300px);
+}
+@media only screen and (max-width: 640px) {
+  .locations__main {
+    width: 100%;
+    margin-bottom: 30px;
+    padding-right: 0px;
+  }
+  .locations__sidebar {
+    background-color: blue;
+    width: 100%;
+  }
+}
+.locations-menu {
+  height: 500px;
+  background-color: #f2f4f8;
+}
+.locations-menu__tab {
+  height: 50px;
+}
+.locations-menu__tab > h3 {
+  position: relative;
+  line-height: 49px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  background-color: #152456;
+  color: #fff;
+  margin: 0;
+  padding: 0 0 0 50px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.locations-menu__tab > h3::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  border: 6px solid #569bca;
+  padding: 0;
+}
+.locations-menu__tab > h3::after {
+  content: '';
+  position: absolute;
+  top: 45%;
+  right: 15px;
+  transform: translateY(-50%) rotate(45deg);
+  box-sizing: border-box;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  border: solid #569bca;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+}
+.locations-menu__tab > h3:hover {
+  background-color: #000222;
+  color: #569bca;
+}
+.locations-menu__tab.is-expanded > h3 {
+  line-height: 50px;
+  border: 0;
+}
+.locations-menu__content.is-expanded {
+  /*display: block;*/
+  max-height: 350px;
+}
+.locations-menu__content.is-collapsed {
+  max-height: 0px;
+  border-width: 0 1px;
+  /*display: none;*/
+}
+.locations-menu__tab.is-expanded > h3::after {
+  opacity: 0.2;
+}
+.locations-menu__panel.hospitals-menu .locations-menu__tab > h3::before {
+  border-color: #569bca;
+}
+.locations-menu__panel.outpatient-menu .locations-menu__tab > h3::before {
+  border-color: purple;
+}
+.locations-menu__panel.urgentcare-menu .locations-menu__tab > h3::before {
+  border-color: orange;
+}
+.locations-menu__content {
+  height: 350px;
+  padding: 0;
+  border: 1px solid #999;
+  overflow-y: scroll;
+  background-color: #fff;
+  transition: ease-out 0.4s;
+}
+.locations-menu__list {
+  list-style-type: none;
+  margin: 0;
+  padding: 20px;
+}
+.locations-menu__list li {
+  font-size: 16px;
+  font-weight: bold;
+  color: #569bca;
+  margin: 0 0 1.3em 0;
+  padding: 0 0 1em 0;
+  border-bottom: 1px solid #ccc;
+}
+.locations-menu__list li:last-of-type {
+  margin: 0;
+}
+.locations__map {
+  width: 100%;
+  height: 400px;
+}
+@media only screen and (max-width: 640px) {
+  .locations__map{
+    height: 300px;
+  }
+}
+.locations__search {
+
+}
+.locations__header {
+  padding-bottom: 50px;
+}
+.locations__header::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.locations__title {
+  float: left;
+  width: calc(250px);
+}
+.locations__title > h2 {
+  font-size: 48px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  color: #569bca;
+  line-height: 1.0em;
+}
+.locations__intro {
+  float: left;
+  width: calc(100% - 250px);
+  padding-top: 10px;
+}
+.locations__intro p {
+  font-size: 18px;
+  line-height: 1.5em;
+  margin: 0;
+  padding: 0;
+}
+@media only screen and (max-width: 640px) {
+  .locations__header {
+    padding-bottom: 20px;
+  }
+  .locations__title {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .locations__title > h2 {
+    font-size: 36px;
+  }
+  .locations__intro {
+    width: 100%;
+  }
+}
+.locations__search {
+  margin: 0 0 15px 0;
+}
+.locations__search::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.search-locations input,
+.search-locations select {
+  position: relative;
+  font-size: 18px;
+  margin: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #ccc;
+  padding-left: 10px;
+  background-color: #fff;
+  color: #333;
+  height: 50px;
+}
+.search-locations select {
+  padding-right: 25px;
+}
+.search-locations__input-wrapper {
+  float: left;
+  position: relative;
+  margin: 10px 10px 0 0;
+}
+.search-locations__select-wrapper {
+  float: left;
+  position: relative;
+  margin: 10px 10px 0 0;
+}
+.search-locations__distance-wrapper {
+  float: left;
+  position: relative;
+  margin: 10px 10px 0 0;
+}
+.search-locations__submit-wrapper {
+  float: left;
+  position: relative;
+  margin: 35px 10px 0 0;
+}
+.search-locations__submit {
+  height: 50px;
+  width: 50px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #f2f4f8;
+  border-radius: 0;
+}
+.search-locations__address {
+  width: 350px;
+}
+.search-locations__distance {
+
+}
+.search-locations__region {
+
+  margin: 0 20px 0 0;
+}
+.search-locations__type {
+
+}
+.search-locations label {
+  display: block;
+  font-size: 12px;
+  height: 20px;
+  margin: 0 0 5px 5px;
+}
+.dropdown-arrow-wrapper {
+  position: relative;
+}
+.dropdown-arrow-wrapper::after {
+  content: '';
+  position: absolute;
+  z-index: 10;
+  display: block;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #000;
+}
+@media only screen and (max-width: 640px) {
+  .search-locations input,
+  .search-locations select {
+    height: 30px;
+    width: 100%;
+  }
+  .search-locations [class*="-wrapper"] {
+    width: 100%;
+  }
+  .search-locations label {
+    margin: 0;
+  }
+}
+.locations__search-options {
+  text-align: right;
+  margin: 0 0 10px 0;
+  color: #ccc;
+}
+.locations__search-options a {
+  font-size: 14px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #569bca;
+  font-weight: bold;
+  display: inline-block;
+  margin: 0 10px;
+}
+@media only screen and (max-width: 640px) {
+  .locations__search-options {
+    text-align: center;
+  }
+}
+.map-info-window {
+  /*background-color: #fff;
+  padding: 20px;
+  box-shadow: 10px 5px 5px black !important;*/
+
+}
+.map-info-window h3 {
+  font-size: 21px;
+  font-weight: bold;
+}
+.map-info-window__address {
+  font-size: 16px;
+}
+.map-info-window__locationlink {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #569bca;
+  font-weight: bold;
+  font-size: 14px;
+}
+.map-info-window__directionslink {
+  font-weight: bold;
+  color: #569bca;
+  text-decoration: none;
+  font-size: .8em;
+}
+/*.gm-style-iw {
+  width: 350px !important;
+  top: 0 !important;
+  left: 0 !important;
+  background-color: #fff;
+  box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+  border: 1px solid #f2f4f8;
+  border-radius: 0;
+}*/
+.gm-style .gm-style-iw {
+   /*background-color: #fff !important;
+   top: 0 !important;
+   left: 0 !important;
+   width: 100% !important;
+   height: 100% !important;
+   min-height: 120px !important;
+   padding-top: 10px;
+   display: block !important;*/
+   width: 280px !important;
+   min-height: 120px !important;
+   overflow-y: scroll !important;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Coordinates Generator</title>
+  </head>
+  <body>
+    <script>
+      // list of locations
+      var locations = [
+        {
+          name: "Abington Hospital",
+          address: "1200 Old York Rd. Abington, PA 19001",
+          lat: 40.119136,
+          lng: -75.119953
+        },
+        {
+          name: "Abington Lansdale",
+          address: "100 Medical Campus Dr. Lansdale, PA 19446",
+          lat: 40.25115,
+          lng: -75.271
+        }
+      ];
+      var test = "test";
+
+      for (var i = 0; i < locations.length; i++) {
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = getCoordinates;
+        httpRequest.open('GET', 'https://maps.googleapis.com/maps/api/geocode/json?address=' + locations[i].address + '&key=AIzaSyC3Ljo3gaxiAY83sPabqHZCa7_GFA7a9Jg');
+        httpRequest.send();
+        //console.log('Location: ' + locations[i].lat);
+        function getCoordinates() {
+          if (httpRequest.readyState === XMLHttpRequest.DONE) {
+            // Everything is good, the response was received.
+            if (httpRequest.status === 200) {
+              //console.log(httpRequest.responseText);
+              var json = JSON.parse(httpRequest.responseText);
+              locations[0].lat = 1;
+console.log('Location: ' + i);
+              //locations[i].lat = json.results[0].geometry.location.lat;
+              //locations[i].lng = json.results[0].geometry.location.lng;
+            } else {
+              console.log('There was a problem with the request.');
+            }
+          }
+        }
+
+      }
+    </script>
+  </body>
+</html>
