@@ -35,6 +35,7 @@ html, body {
   clear: both;
 }
 .locations__sidebar {
+  margin: 40px 0 0 0;
   padding: 0;
   float: left;
   width: calc(300px);
@@ -109,7 +110,7 @@ html, body {
 }
 .locations-menu__content.is-expanded {
   /*display: block;*/
-  max-height: 350px;
+  max-height: 400px;
 }
 .locations-menu__content.is-collapsed {
   max-height: 0px;
@@ -129,12 +130,31 @@ html, body {
   border-color: orange;
 }
 .locations-menu__content {
-  height: 350px;
+  height: 400px;
   padding: 0;
   border: 1px solid #999;
-  overflow-y: scroll;
+  overflow: hidden;
   background-color: #fff;
   transition: ease-out 0.4s;
+}
+.locations-menu__info {
+  position: relative;
+  height: 125px;
+  background-color: #f2f4f8;
+  padding: 15px;
+  font-size: 15px;
+}
+.locations-menu__list-heading {
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #999;
+}
+.locations-menu__list-wrapper {
+  overflow-y: scroll;
+  height: 275px;
 }
 .locations-menu__list {
   list-style-type: none;
@@ -151,6 +171,10 @@ html, body {
 }
 .locations-menu__list li:last-of-type {
   margin: 0;
+}
+.locations-menu__list li a {
+  color: #569bca;
+  text-decoration: none;
 }
 .locations__map {
   width: 100%;
@@ -173,24 +197,21 @@ html, body {
   clear: both;
 }
 .locations__title {
-  float: left;
-  width: calc(250px);
+
 }
 .locations__title > h2 {
-  font-size: 48px;
+  font-size: 40px;
   font-weight: normal;
-  margin: 0;
+  margin: 15px 0 20px 0;
   padding: 0;
   color: #569bca;
   line-height: 1.0em;
 }
 .locations__intro {
-  float: left;
-  width: calc(100% - 250px);
   padding-top: 10px;
 }
 .locations__intro p {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.5em;
   margin: 0;
   padding: 0;

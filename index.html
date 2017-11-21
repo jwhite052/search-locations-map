@@ -8,16 +8,14 @@
   </head>
   <body>
     <div class="locations">
-      <div class="locations__header">
+      <div class="locations__main">
         <div class="locations__title">
-          <h2>Our Care <strong>Network</strong></h2>
+          <h2>Our Care Network</h2>
         </div>
         <div class="locations__intro">
           <p>Jefferson Health offers an extensive care network with offices throughout Pennsylvania, New Jersey and Delaware. Use the directory and map to find the best location for you including detailed driving directions and further information about services available at each of our offices.</p>
         </div>
-      </div>
-      <div class="locations__main">
-        <div class="locations__search">
+        <!-- <div class="locations__search">
           <div class="search-locations">
             <div class="search-locations__input-wrapper">
               <label for="autocomplete">Address</label>
@@ -58,7 +56,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="locations__search-options">
           <a class="locations__search-reset" href="#">Reset Map</a>
         </div>
@@ -73,7 +71,15 @@
               <h3>Hospitals</h3>
             </div>
             <div class="locations-menu__content is-expanded" aria-hidden="false">
-              <ul class="locations-menu__list"></ul>
+              <div class="locations-menu__info">
+                When hospitalization is needed, Jefferson Health provides the best inpatient care.
+                <div class="locations-menu__list-heading">
+                  Select below to view Location Details
+                </div>
+              </div>
+              <div class="locations-menu__list-wrapper">
+                <ul class="locations-menu__list"></ul>
+              </div>
             </div>
           </div>
           <div class="locations-menu__panel outpatient-menu">
@@ -81,7 +87,15 @@
               <h3>Outpatient</h3>
             </div>
             <div class="locations-menu__content is-collapsed" aria-hidden="true">
-              <ul class="locations-menu__list"></ul>
+              <div class="locations-menu__info">
+                When hospitalization is needed, Jefferson Health provides the best inpatient care.
+                <div class="locations-menu__list-heading">
+                  Select below to view Location Details
+                </div>
+              </div>
+              <div class="locations-menu__list-wrapper">
+                <ul class="locations-menu__list"></ul>
+              </div>
             </div>
           </div>
           <div class="locations-menu__panel urgentcare-menu">
@@ -89,7 +103,15 @@
               <h3>Urgent Care</h3>
             </div>
             <div class="locations-menu__content is-collapsed" aria-hidden="true">
-              <ul class="locations-menu__list"></ul>
+              <div class="locations-menu__info">
+                When your condition can't wait – like a bad cough or a sprained knee – Jefferson Health Urgent Care is your best option. 
+                <div class="locations-menu__list-heading">
+                  Select below to view Location Details
+                </div>
+              </div>
+              <div class="locations-menu__list-wrapper">
+                <ul class="locations-menu__list"></ul>
+              </div>
             </div>
           </div>
         </div>

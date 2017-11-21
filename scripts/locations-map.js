@@ -153,62 +153,62 @@ function initMap() {
   setMenuMarkersUI(hospitalsList, menuUI.hospitals.list);
   setMenuMarkersUI(outpatientList, menuUI.outpatient.list);
   setMenuMarkersUI(urgentcareList, menuUI.urgentcare.list);
-
-  var searchFields = {
-    'address': document.getElementsByClassName('search-locations__address')[0],
-    'distance': document.getElementsByClassName('search-locations__distance')[0],
-    'region': document.getElementsByClassName('search-locations__region')[0],
-    'type': document.getElementsByClassName('search-locations__type')[0]
-  };
-
-  var currentMarkers = markers;
-
-  var updateMap = function() {
-    var region = document.getElementsByClassName('search-locations__region')[0].value;
-    var type = document.getElementsByClassName('search-locations__type')[0].value;
-
-    for (var i = 0; i < currentMarkers.length; i++) {
-      if ((currentMarkers[i].location.tags.region === region || region === "default") &&
-          (currentMarkers[i].location.tags.type === type || type === "default")) {
-        currentMarkers[i].setMap(map);
-      } else {
-        currentMarkers[i].setMap(null);
-      }
-    }
-  };
-
-  var updateMapRadius = function() {
-    var distance = document.getElementsByClassName('search-locations__distance')[0].value;
-    var address = document.getElementsByClassName('search-locations__address')[0].value;
-
-    if (distance !== 'default') {
-      console.log('Distance: ' + distance);
-      switch (distance) {
-        case '1':
-          currentSearchCircle.setOptions({radius: getRadiusInMeters(1)});
-          map.setOptions({zoom: 16, center: currentSearchMarker.position});
-          break;
-        case '5':
-          currentSearchCircle.setOptions({radius: getRadiusInMeters(5)});
-          map.setOptions({zoom: 13, center: currentSearchMarker.position});
-          break;
-        case '10':
-          currentSearchCircle.setOptions({radius: getRadiusInMeters(10)});
-          map.setOptions({zoom: 11, center: currentSearchMarker.position});
-          break;
-        case '25':
-          currentSearchCircle.setOptions({radius: getRadiusInMeters(25)});
-          map.setOptions({zoom: 10, center: currentSearchMarker.position});
-          break;
-        default:
-          break;
-      }
-    }
-
-    function getRadiusInMeters(miles) {
-      return (1609.34 * miles) / 2;
-    }
-  };
+  //
+  // var searchFields = {
+  //   'address': document.getElementsByClassName('search-locations__address')[0],
+  //   'distance': document.getElementsByClassName('search-locations__distance')[0],
+  //   'region': document.getElementsByClassName('search-locations__region')[0],
+  //   'type': document.getElementsByClassName('search-locations__type')[0]
+  // };
+  //
+  // var currentMarkers = markers;
+  //
+  // var updateMap = function() {
+  //   var region = document.getElementsByClassName('search-locations__region')[0].value;
+  //   var type = document.getElementsByClassName('search-locations__type')[0].value;
+  //
+  //   for (var i = 0; i < currentMarkers.length; i++) {
+  //     if ((currentMarkers[i].location.tags.region === region || region === "default") &&
+  //         (currentMarkers[i].location.tags.type === type || type === "default")) {
+  //       currentMarkers[i].setMap(map);
+  //     } else {
+  //       currentMarkers[i].setMap(null);
+  //     }
+  //   }
+  // };
+  //
+  // var updateMapRadius = function() {
+  //   var distance = document.getElementsByClassName('search-locations__distance')[0].value;
+  //   var address = document.getElementsByClassName('search-locations__address')[0].value;
+  //
+  //   if (distance !== 'default') {
+  //     console.log('Distance: ' + distance);
+  //     switch (distance) {
+  //       case '1':
+  //         currentSearchCircle.setOptions({radius: getRadiusInMeters(1)});
+  //         map.setOptions({zoom: 16, center: currentSearchMarker.position});
+  //         break;
+  //       case '5':
+  //         currentSearchCircle.setOptions({radius: getRadiusInMeters(5)});
+  //         map.setOptions({zoom: 13, center: currentSearchMarker.position});
+  //         break;
+  //       case '10':
+  //         currentSearchCircle.setOptions({radius: getRadiusInMeters(10)});
+  //         map.setOptions({zoom: 11, center: currentSearchMarker.position});
+  //         break;
+  //       case '25':
+  //         currentSearchCircle.setOptions({radius: getRadiusInMeters(25)});
+  //         map.setOptions({zoom: 10, center: currentSearchMarker.position});
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //   }
+  //
+  //   function getRadiusInMeters(miles) {
+  //     return (1609.34 * miles) / 2;
+  //   }
+  // };
 
   // searchFields.address.addEventListener('keyup', function() {
   //   console.log("Test");
@@ -220,26 +220,26 @@ function initMap() {
   //   }
   // });
 
-  // attach listeners to search fields
-  searchFields.region.addEventListener('change', updateMap);
-  searchFields.type.addEventListener('change', updateMap);
-  searchFields.distance.addEventListener('change', updateMapRadius);
+  // // attach listeners to search fields
+  // searchFields.region.addEventListener('change', updateMap);
+  // searchFields.type.addEventListener('change', updateMap);
+  // searchFields.distance.addEventListener('change', updateMapRadius);
 
   document.getElementsByClassName('locations__search-reset')[0].addEventListener('click', function(e) {
     e.preventDefault();
-    if (currentSearchMarker) {
-      currentSearchCircle.setMap(null);
-      currentSearchMarker.setMap(null);
-    }
+    // if (currentSearchMarker) {
+    //   currentSearchCircle.setMap(null);
+    //   currentSearchMarker.setMap(null);
+    // }
     map.setOptions({center: mapdefaults.center, zoom: mapdefaults.zoom });
     clearMarkers();
     setMapOnAll(map);
 
-    searchFields.address.value = '';
-    searchFields.region.selectedIndex = 0;
-    searchFields.type.selectedIndex = 0;
-    searchFields.distance.selectedIndex = 0;
-    document.getElementsByClassName('search-locations__distance-wrapper')[0].style.display = "none";
+    // searchFields.address.value = '';
+    // searchFields.region.selectedIndex = 0;
+    // searchFields.type.selectedIndex = 0;
+    // searchFields.distance.selectedIndex = 0;
+    // document.getElementsByClassName('search-locations__distance-wrapper')[0].style.display = "none";
 
     infowindow.close();
   });
@@ -289,83 +289,83 @@ function initMap() {
   //   console.log("Focus!");
   // });
 
-  function initAutocomplete() {
-    // Create the autocomplete object, restricting the search to geographical
-    // location types.
-    autocomplete = new google.maps.places.Autocomplete(
-        /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-        {types: ['geocode']});
-
-    // When the user selects an address from the dropdown, populate the address
-    // fields in the form.
-    autocomplete.addListener('place_changed', fillInAddress);
-  }
-
-  var geocoder = new google.maps.Geocoder();
-
-  var currentSearchMarker;
-  var currentSearchCircle;
-
-  function fillInAddress() {
-    // Get the place details from the autocomplete object.
-    var place = autocomplete.getPlace();
-    console.log(place);
-    geocoder.geocode({'address': place.name}, function(results, status) {
-      if (status === 'OK') {
-        if (results[0]) {
-          if (currentSearchMarker) {
-            currentSearchMarker.setMap(null);
-          }
-          currentSearchMarker = new google.maps.Marker({
-            position: results[0].geometry.location,
-            map: map,
-            //animation: google.maps.Animation.DROP,
-            optimized: false,
-            zIndex:-99999999,
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 5,
-              strokeColor: '#569bca'
-            }
-          });
-          // currentSearchMarker.setAnimation(google.maps.Animation.BOUNCE);
-          map.setOptions({
-            center: results[0].geometry.location,
-            zoom: 15
-          });
-          if (currentSearchCircle) {
-            currentSearchCircle.setMap(null);
-          }
-          currentSearchCircle = new google.maps.Circle({
-            strokeColor: '#569bca',
-            strokeOpacity: 0.7,
-            strokeWeight: 1,
-            fillColor: '#569bca',
-            fillOpacity: 0.1,
-            map: map,
-            center: results[0].geometry.location,
-            radius: 1609.34
-          });
-        } else {
-          console.log('No results found');
-        }
-      } else {
-        console.log('Geocoder failed due to: ' + status);
-      }
-    });
-    console.log("Test");
-    console.log(searchFields.address.value);
-    if (searchFields.address.value === '') {
-      console.log("Hide");
-      document.getElementsByClassName('search-locations__distance-wrapper')[0].style.display = "none";
-      currentSearchMarker.setMap(null);
-      currentSearchCircle.setMap(null);
-    } else {
-      console.log("Show");
-      document.getElementsByClassName('search-locations__distance-wrapper')[0].style.display = "inline-block";
-    }
-  }
-
-  initAutocomplete();
+  // function initAutocomplete() {
+  //   // Create the autocomplete object, restricting the search to geographical
+  //   // location types.
+  //   autocomplete = new google.maps.places.Autocomplete(
+  //       /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+  //       {types: ['geocode']});
+  //
+  //   // When the user selects an address from the dropdown, populate the address
+  //   // fields in the form.
+  //   autocomplete.addListener('place_changed', fillInAddress);
+  // }
+  //
+  // var geocoder = new google.maps.Geocoder();
+  //
+  // var currentSearchMarker;
+  // var currentSearchCircle;
+  //
+  // function fillInAddress() {
+  //   // Get the place details from the autocomplete object.
+  //   var place = autocomplete.getPlace();
+  //   console.log(place);
+  //   geocoder.geocode({'address': place.name}, function(results, status) {
+  //     if (status === 'OK') {
+  //       if (results[0]) {
+  //         if (currentSearchMarker) {
+  //           currentSearchMarker.setMap(null);
+  //         }
+  //         currentSearchMarker = new google.maps.Marker({
+  //           position: results[0].geometry.location,
+  //           map: map,
+  //           //animation: google.maps.Animation.DROP,
+  //           optimized: false,
+  //           zIndex:-99999999,
+  //           icon: {
+  //             path: google.maps.SymbolPath.CIRCLE,
+  //             scale: 5,
+  //             strokeColor: '#569bca'
+  //           }
+  //         });
+  //         // currentSearchMarker.setAnimation(google.maps.Animation.BOUNCE);
+  //         map.setOptions({
+  //           center: results[0].geometry.location,
+  //           zoom: 15
+  //         });
+  //         if (currentSearchCircle) {
+  //           currentSearchCircle.setMap(null);
+  //         }
+  //         currentSearchCircle = new google.maps.Circle({
+  //           strokeColor: '#569bca',
+  //           strokeOpacity: 0.7,
+  //           strokeWeight: 1,
+  //           fillColor: '#569bca',
+  //           fillOpacity: 0.1,
+  //           map: map,
+  //           center: results[0].geometry.location,
+  //           radius: 1609.34
+  //         });
+  //       } else {
+  //         console.log('No results found');
+  //       }
+  //     } else {
+  //       console.log('Geocoder failed due to: ' + status);
+  //     }
+  //   });
+  //   console.log("Test");
+  //   console.log(searchFields.address.value);
+  //   if (searchFields.address.value === '') {
+  //     console.log("Hide");
+  //     document.getElementsByClassName('search-locations__distance-wrapper')[0].style.display = "none";
+  //     currentSearchMarker.setMap(null);
+  //     currentSearchCircle.setMap(null);
+  //   } else {
+  //     console.log("Show");
+  //     document.getElementsByClassName('search-locations__distance-wrapper')[0].style.display = "inline-block";
+  //   }
+  // }
+  //
+  // initAutocomplete();
 
 } // end initMap()
