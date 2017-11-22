@@ -1,56 +1,88 @@
 function initMap() {
 
-  // cache UI elements
-  var menu = document.getElementsByClassName('locations-menu')[0];
-  var menuTabs = menu.querySelectorAll('.locations-menu__panel > .locations-menu__tab');
+  "use strict";
 
-  // set accessibility
-  var setAria = function(el1, el2, expanded) {
-    if (expanded) {
-      el1.setAttribute('aria-expanded', 'true');
-      el2.setAttribute('aria-hidden', 'false');
-    } else {
-      el1.setAttribute('aria-expanded', 'false');
-      el2.setAttribute('aria-hidden', 'true');
-    }
+  // cache UI elements
+  var locationsSectionEl = document.getElementsByClassName('locations-section')[0];
+
+  var locationsUI = {
+    menu: locationsSectionEl.getElementsByClassName('locations-menu')[0],
+    infoWindow: locationsSectionEl.getElementsByClassName('locations-info-window__wrapper')[0],
+    infoWindowContent: locationsSectionEl.getElementsByClassName('locations-info-window')[0]
   };
 
-  // toggle menu collapse state
-  var toggleMenu = function(el) {
-    var thisMenuTab = el;
-    var thisMenuContent = el.nextElementSibling;
-    if (thisMenuTab.classList.contains('is-collapsed')) {
-      setAria(thisMenuTab, thisMenuContent, true);
+  /*
+  * Locations Menu UI
+  */
+
+  function LocationsMenuUI(documentElement) {
+    var ui = {
+        menu: documentElement.getElementsByClassName('locations-menu')[0],
+        tabs: documentElement.querySelectorAll('.locations-menu__panel > .locations-menu__tab')
+    };
+    this.getUI = function() {
+      return ui;
+    };
+  }
+  LocationsMenuUI.prototype.getUI = function() {
+    return this.getUI;
+  };
+  // toggle accessibility
+  LocationsMenuUI.prototype.setAria = function(element1, element2, expanded) {
+    if (expanded) {
+      element1.setAttribute('aria-expanded', 'true');
+      element2.setAttribute('aria-hidden', 'false');
     } else {
-      setAria(thisMenuTab, thisMenuContent, false);
+      element1.setAttribute('aria-expanded', 'false');
+      element2.setAttribute('aria-hidden', 'true');
+    }
+  };
+  // toggle menu collapse state
+  LocationsMenuUI.prototype.toggleMenu = function(element) {
+    var _self = this;
+
+    var thisMenuTab = element;
+    var thisMenuContent = element.nextElementSibling;
+    if (thisMenuTab.classList.contains('is-collapsed')) {
+      _self.setAria(thisMenuTab, thisMenuContent, true);
+    } else {
+      _self.setAria(thisMenuTab, thisMenuContent, false);
     }
     thisMenuContent.classList.toggle('is-collapsed');
     thisMenuContent.classList.toggle('is-expanded');
     thisMenuTab.classList.toggle('is-collapsed');
     thisMenuTab.classList.toggle('is-expanded');
   };
-
   // expand menu
-  var expandMenu = function(e) {
-    e.preventDefault();
-    var thisMenuTab = e.target.parentNode;
+  LocationsMenuUI.prototype.expandMenu = function(event) {
+    var _self = this;
+
+    event.preventDefault();
+    var thisMenuTab = event.target.parentNode;
+
     if (!thisMenuTab.classList.contains('is-expanded')) {
       // collapse expanded menu
-      toggleMenu(menu.querySelectorAll('.locations-menu__tab.is-expanded')[0]);
-      toggleMenu(thisMenuTab);
+      _self.toggleMenu(locationsSectionEl.querySelectorAll('.locations-menu__tab.is-expanded')[0]);
+      _self.toggleMenu(thisMenuTab);
     }
   };
 
-  // attach listener to each menu tab
-  for (var i = 0; i < menuTabs.length; i++) {
-    menuTabs[i].addEventListener('click', expandMenu, false);
+  var locationsMenuUI = new LocationsMenuUI(locationsSectionEl);
+
+  // attach listener to each menu tab, bind handler to locations menu object
+  for (var i = 0; i < locationsMenuUI.getUI().tabs.length; i++) {
+     locationsMenuUI.getUI().tabs[i].addEventListener('click', locationsMenuUI.expandMenu.bind(locationsMenuUI), false);
   }
+
+  /*
+  * Google Map Settings
+  */
 
   // initial map settings
   var mapdefaults = {
     center: {lat: 40.0556365, lng: -75.1},
     zoom: 10
-  }
+  };
 
   // initalize map
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -65,7 +97,26 @@ function initMap() {
   });
 
   // instantiate map infowindow object
-  var infowindow = new google.maps.InfoWindow({ });
+  // var infowindow = new google.maps.InfoWindow({ });
+
+  // function LocationInfoWindow(content) {
+  //   this.el = locationSection.getElementsByClassName('locations-info-window')[0];
+  // };
+  // LocationInfoWindow.prototype.showWindow = function() {
+  //   var _self = this;
+  //   _self.el.style.display = 'hide';
+  // };
+  // LocationInfoWindow.prototype.hideWindow = function() {
+  //   var _self = this;
+  //   _self.el.style.display = 'none';
+  // };
+  // LocationInfoWindow.prototype.setContent = function() {
+  //   var _self = this;
+  //   _self.el.style.display = 'none';
+  // };
+  //
+  //
+  // var locationInfoWindow = new LocationInfoWindow(content);
 
   // array to store map markers
   var markers = [];
@@ -75,35 +126,39 @@ function initMap() {
     for (var i = 0; i < list.length; i++) {
       // store new marker in list
       var markericon = '/images/blue-marker-icon.png';
-      if (list[i].tags.type === 'hospitals') {
+      if (list[i].type === 'hospitals') {
         markericon = '/images/blue-marker-icon.png';
-      } else if (list[i].tags.type === 'outpatient') {
+      } else if (list[i].type === 'outpatient') {
         markericon = '/images/purple-marker-icon.png';
-      } else if (list[i].tags.type === 'urgent') {
+      } else if (list[i].type === 'urgent') {
         markericon = '/images/orange-marker-icon.png';
       }
       var marker = new google.maps.Marker({
-        position: {lat: list[i].map.lat, lng: list[i].map.lng},
+        position: {lat: list[i].position.lat, lng: list[i].position.lng},
         map: map,
         animation: google.maps.Animation.DROP,
         icon: markericon,
         // custom properties
         location: list[i]
       });
+      list[i].marker = marker;
       marker.addListener('click', function() {
+        var lngOffset = 0.001;
+        // this.setAnimation(google.maps.Animation.BOUNCE);
         // infowindow content
-        var content = '<div class="map-info-window">' +
-        '<h3 class="map-info-window__title">' + this.location.name + '</h3>' +
-        '<p class="map-info-window__address">' + this.location.info.address + '<br />' +
-        '<a class="map-info-window__directionslink" href="' + this.location.info.directionsurl + '" target="_blank">Get Directions</a></p>' +
-        '<p class="map-info-window__phone">' + this.location.info.phone + '</p>' +
-        '<p class="map-info-window__hours">' + this.location.info.hours + '</p>' +
-        '<div><a class="map-info-window__locationlink" href="' + this.location.info.url + '" target="_blank">View Additional Information</a></div>' +
-        '</div>';
-        infowindow.setContent(content);
-        infowindow.open(map, this);
+        var content = '<h3 class="locations-info-window__title">' + this.location.name + '</h3>' +
+        '<p class="locations-info-window__address">' + this.location.address + '<br />' +
+        '<a class="locations-info-window__directionslink" href="' + encodeURI('https://www.google.com/maps/place/' + this.location.address.replace(/<br>/g,' ')) + '" target="_blank">Get Directions</a></p>';
+        content += this.location.phone ? '<p class="locations-info-window__phone">' + this.location.phone + '</p>' : '';
+        content += this.location.hours ? '<p class="locations-info-window__hours">' + this.location.hours + '</p>' : '';
+        content += '<div class="locations-info-window__locationlink"><a href="' + this.location.url + '" target="_blank">View More Details</a></div>';
+        locationsUI.infoWindowContent.innerHTML = content;
+        showInfoWindow();
+        // infowindow.setContent(content);
+        // infowindow.open(map, this);
+        console.log(this.position);
         map.setOptions({
-          center: this.position,
+          center: this.getPosition(),
           zoom: 15
         });
       });
@@ -112,13 +167,31 @@ function initMap() {
     }
   };
 
-  // add
-  google.maps.event.addListener(infowindow, 'domready', function() {
-    var iwContent = document.getElementsByClassName('gm-style-iw')[0];
-    var iwBackground = iwContent.parentNode.childNodes[0];
-    iwBackground.querySelectorAll(':nth-child(2)')[0].style.background = '#fff';
-    iwBackground.querySelectorAll(':nth-child(4)')[0].style.display = 'none';
+  function showInfoWindow() {
+    console.log(locationsUI.infoWindow.classList);
+    if (!locationsUI.infoWindow.classList.contains('is-visible')) {
+      locationsUI.infoWindow.classList.toggle('is-visible');
+      locationsUI.infoWindow.classList.toggle('is-hidden');
+    }
+  }
+  function hideInfoWindow() {
+    console.log(locationsUI.infoWindow.classList);
+    if (!locationsUI.infoWindow.classList.contains('is-hidden')) {
+      locationsUI.infoWindow.classList.toggle('is-visible');
+      locationsUI.infoWindow.classList.toggle('is-hidden');
+    }
+  }
+
+  locationsUI.infoWindow.getElementsByClassName('locations-info-window__close')[0].addEventListener('click', function() {
+    hideInfoWindow();
   });
+  // add
+  // google.maps.event.addListener(infowindow, 'domready', function() {
+  //   var iwContent = document.getElementsByClassName('gm-style-iw')[0];
+  //   var iwBackground = iwContent.parentNode.childNodes[0];
+  //   iwBackground.querySelectorAll(':nth-child(2)')[0].style.background = '#fff';
+  //   iwBackground.querySelectorAll(':nth-child(4)')[0].style.display = 'none';
+  // });
 
   // create markers for each list of locations data
   initMarkers(hospitalsList);
@@ -128,22 +201,26 @@ function initMap() {
   // cache menu list elements
   var menuUI = {
     'hospitals': {
-      'list': menu.querySelectorAll('.hospitals-menu .locations-menu__list')[0]
+      'list': locationsUI.menu.querySelectorAll('.hospitals-menu .locations-menu__list')[0]
     },
     'outpatient': {
-      'list': menu.querySelectorAll('.outpatient-menu .locations-menu__list')[0]
+      'list': locationsUI.menu.querySelectorAll('.outpatient-menu .locations-menu__list')[0]
     },
     'urgentcare': {
-      'list': menu.querySelectorAll('.urgentcare-menu .locations-menu__list')[0]
+      'list': locationsUI.menu.querySelectorAll('.urgentcare-menu .locations-menu__list')[0]
     }
   };
+
+  /*
+  * Locations Menu
+  */
 
   // populate menu lists with locations
   var setMenuMarkersUI = function(data, ui) {
     for (var i = 0; i < data.length; i++) {
       var li = document.createElement('LI');
-      li.innerHTML = '<a href="#">' + data[i].name + '</a>';
-      li.setAttribute('data-map-id', i);
+      li.innerHTML = '<a href="' + data[i].url + '">' + data[i].name + '</a>';
+      // li.setAttribute('data-map-id', i);
       ui.appendChild(li);
     }
   };
@@ -153,12 +230,12 @@ function initMap() {
   setMenuMarkersUI(urgentcareList, menuUI.urgentcare.list);
 
   // reset map button
-  document.getElementsByClassName('locations__search-reset')[0].addEventListener('click', function(e) {
+  locationsSectionEl.getElementsByClassName('locations__search-reset')[0].addEventListener('click', function(e) {
     e.preventDefault();
     map.setOptions({center: mapdefaults.center, zoom: mapdefaults.zoom });
     clearMarkers();
     setMapOnAll(map);
-    infowindow.close();
+    hideInfoWindow();
   });
 
   // sets the map on all markers in the array

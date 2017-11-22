@@ -177,13 +177,103 @@ html, body {
   text-decoration: none;
 }
 .locations__map {
+  position: relative;
   width: 100%;
   height: 400px;
+  border: 1px solid #f2f4f8;
+  overflow: hidden;
 }
 @media only screen and (max-width: 640px) {
   .locations__map{
     height: 300px;
   }
+}
+.locations-info-window__wrapper {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 275px;
+  height: 350px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+  transition: ease-in .4s;
+  overflow: hidden;
+}
+.locations-info-window__wrapper * {
+  box-sizing: border-box;
+}
+.locations-info-window__wrapper.is-visible {
+}
+.locations-info-window__wrapper.is-hidden {
+  left: -400px;
+}
+.locations-info-window__title-bar {
+  position: relative;
+  background-color: #666;
+  height: 35px;
+  line-height: 35px;
+  width: 100%;
+  color: #fff;
+  font-weight: bold;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  text-align: center;
+}
+.locations-info-window__wrapper--urgentcare .locations-info-window__title-bar {
+
+}
+.locations-info-window__close {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  font-size: 18px;
+  color: #ccc;
+  cursor: pointer;
+}
+.locations-info-window {
+  /*background-color: #fff;
+  padding: 20px;
+  box-shadow: 10px 5px 5px black !important;*/
+  font-size: 14px;
+  padding: 20px;
+  overflow-y: scroll;
+  height: 315px;
+}
+.locations-info-window__title {
+  font-size: 21px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+.locations-info-window__address {
+  font-size: 16px;
+}
+.locations-info-window__locationlink {
+
+}
+.locations-info-window__locationlink a {
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #569bca;
+  text-align: center;
+  display: block;
+  text-transform: uppercase;
+  border: 2px solid #569bca;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 2px;
+}
+.locations-info-window__locationlink a:hover {
+  background-color: #569bca;
+  color: #fff;
+}
+.locations-info-window__directionslink {
+  font-weight: bold;
+  color: #569bca;
+  text-decoration: none;
+  font-size: .8em;
 }
 .locations__header {
   padding-bottom: 50px;
@@ -246,31 +336,6 @@ html, body {
   .locations__search-options {
     text-align: center;
   }
-}
-.map-info-window {
-  /*background-color: #fff;
-  padding: 20px;
-  box-shadow: 10px 5px 5px black !important;*/
-}
-.map-info-window h3 {
-  font-size: 21px;
-  font-weight: bold;
-}
-.map-info-window__address {
-  font-size: 16px;
-}
-.map-info-window__locationlink {
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #569bca;
-  font-weight: bold;
-  font-size: 14px;
-}
-.map-info-window__directionslink {
-  font-weight: bold;
-  color: #569bca;
-  text-decoration: none;
-  font-size: .8em;
 }
 .gm-style .gm-style-iw {
    width: 280px !important;
