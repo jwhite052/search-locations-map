@@ -8,7 +8,12 @@ function initMap() {
   var locationsUI = {
     menu: locationsSectionEl.getElementsByClassName('locations-menu')[0],
     infoWindow: locationsSectionEl.getElementsByClassName('locations-info-window__wrapper')[0],
-    infoWindowContent: locationsSectionEl.getElementsByClassName('locations-info-window')[0]
+    infoWindowContent: locationsSectionEl.getElementsByClassName('locations-info-window')[0],
+    infowindow: {
+      element: locationsSectionEl.getElementsByClassName('locations-info-window__wrapper')[0],
+      titlebar: locationsSectionEl.getElementsByClassName('locations-info-window__title-bar')[0],
+      titlebarname: locationsSectionEl.getElementsByClassName('locations-info-window__title-bar-name')[0]
+    }
   };
 
   /*
@@ -143,22 +148,46 @@ function initMap() {
       });
       list[i].marker = marker;
       marker.addListener('click', function() {
-        var lngOffset = 0.001;
-        // this.setAnimation(google.maps.Animation.BOUNCE);
-        // infowindow content
+        var _self = this;
+        this.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function(){
+          _self.setAnimation(null);
+        }, 2000);
+
+        // info window
+        var infowindowtitle = '';
+        var infowindowclass = '--default';
+        if (this.location.type === 'hospital') {
+          infowindowtitle = 'Hospitals';
+          infowindowclass = '--hospitals';
+        } else if (this.location.type === 'outpatient') {
+          infowindowtitle = 'Outpatient';
+          infowindowclass = '--outpatient';
+        } else if (this.location.type === 'urgent') {
+          infowindowtitle = 'Urgent Care';
+          infowindowclass = '--urgentcare';
+        }
+        locationsUI.infowindow.titlebarname.innerHTML = infowindowtitle;
+        // locationsUI.infowindow.element.className.replace(/locations-info-window__wrapper--[a-zA-z]*/g, ' ');
+        locationsUI.infowindow.element.classList.remove('locations-info-window__wrapper--hospitals');
+        locationsUI.infowindow.element.classList.remove('locations-info-window__wrapper--outpatient');
+        locationsUI.infowindow.element.classList.remove('locations-info-window__wrapper--urgentcare');
+        locationsUI.infowindow.element.classList.add('locations-info-window__wrapper' + infowindowclass);
+
         var content = '<h3 class="locations-info-window__title">' + this.location.name + '</h3>' +
         '<p class="locations-info-window__address">' + this.location.address + '<br />' +
         '<a class="locations-info-window__directionslink" href="' + encodeURI('https://www.google.com/maps/place/' + this.location.address.replace(/<br>/g,' ')) + '" target="_blank">Get Directions</a></p>';
         content += this.location.phone ? '<p class="locations-info-window__phone">' + this.location.phone + '</p>' : '';
         content += this.location.hours ? '<p class="locations-info-window__hours">' + this.location.hours + '</p>' : '';
-        content += '<div class="locations-info-window__locationlink"><a href="' + this.location.url + '" target="_blank">View More Details</a></div>';
+        content += '<div class="locations-info-window__locationlink"><a href="' + this.location.url + '">View More Details</a></div>';
         locationsUI.infoWindowContent.innerHTML = content;
         showInfoWindow();
-        // infowindow.setContent(content);
-        // infowindow.open(map, this);
-        console.log(this.position);
+
+        // map
+        var lngOffset = -0.005;
+        console.log(this.getPosition().lat());
         map.setOptions({
-          center: this.getPosition(),
+          center: {lat: this.getPosition().lat(), lng: this.getPosition().lng() + lngOffset},
           zoom: 15
         });
       });

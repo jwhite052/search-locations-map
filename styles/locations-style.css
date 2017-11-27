@@ -40,7 +40,7 @@ html, body {
   float: left;
   width: calc(300px);
 }
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 992px) {
   .locations__main {
     width: 100%;
     margin-bottom: 30px;
@@ -121,13 +121,13 @@ html, body {
   opacity: 0.2;
 }
 .locations-menu__panel.hospitals-menu .locations-menu__tab > h3::before {
-  border-color: #569bca;
+  border-color: #4a7ab8;
 }
 .locations-menu__panel.outpatient-menu .locations-menu__tab > h3::before {
-  border-color: purple;
+  border-color: #ab2d8b;
 }
 .locations-menu__panel.urgentcare-menu .locations-menu__tab > h3::before {
-  border-color: orange;
+  border-color: #f8ad40;
 }
 .locations-menu__content {
   height: 400px;
@@ -183,18 +183,18 @@ html, body {
   border: 1px solid #f2f4f8;
   overflow: hidden;
 }
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 480px) {
   .locations__map{
-    height: 300px;
+    height: 350px;
   }
 }
 .locations-info-window__wrapper {
   position: absolute;
   top: 20px;
   left: 20px;
-  width: 275px;
+  width: 320px;
   height: 350px;
-  background-color: #fff;
+  background-color: rgba(255,255,255,0.9);
   box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
   transition: ease-in .4s;
   overflow: hidden;
@@ -206,6 +206,15 @@ html, body {
 }
 .locations-info-window__wrapper.is-hidden {
   left: -400px;
+}
+@media only screen and (max-width: 480px) {
+  .locations-info-window__wrapper {
+    width: 225px;
+    left: 0px;
+    top: 0px;
+    height: 350px;
+    width: calc(100% - 50px);
+  }
 }
 .locations-info-window__title-bar {
   position: relative;
@@ -220,8 +229,14 @@ html, body {
   letter-spacing: .1em;
   text-align: center;
 }
+.locations-info-window__wrapper--hospitals .locations-info-window__title-bar {
+  background-color: #4a7ab8;
+}
+.locations-info-window__wrapper--outpatient .locations-info-window__title-bar {
+  background-color: #ab2d8b;
+}
 .locations-info-window__wrapper--urgentcare .locations-info-window__title-bar {
-
+  background-color: #f8ad40;
 }
 .locations-info-window__close {
   position: absolute;
@@ -229,8 +244,28 @@ html, body {
   transform: translateY(-50%);
   right: 15px;
   font-size: 18px;
-  color: #ccc;
   cursor: pointer;
+  width: 22px;
+  height: 22px;
+  opacity: 0.7;
+}
+.locations-info-window__close:hover {
+  opacity: 1;
+}
+.locations-info-window__close:before,
+.locations-info-window__close:after {
+  position: absolute;
+  left: 11px;
+  content: ' ';
+  height: 23px;
+  width: 2px;
+  background-color: #fff;
+}
+.locations-info-window__close:before {
+  transform: rotate(45deg);
+}
+.locations-info-window__close:after {
+  transform: rotate(-45deg);
 }
 .locations-info-window {
   /*background-color: #fff;
@@ -242,16 +277,17 @@ html, body {
   height: 315px;
 }
 .locations-info-window__title {
-  font-size: 21px;
+  font-size: 20px;
   font-weight: bold;
-  margin: 0;
+  margin: 0 0 15px 0;
   padding: 0;
+  color: #152456;
 }
 .locations-info-window__address {
   font-size: 16px;
 }
 .locations-info-window__locationlink {
-
+  margin-top: 20px;
 }
 .locations-info-window__locationlink a {
   box-sizing: border-box;
@@ -274,6 +310,22 @@ html, body {
   color: #569bca;
   text-decoration: none;
   font-size: .8em;
+  text-transform: uppercase;
+}
+@media only screen and (max-width: 480px) {
+  .locations-info-window {
+    font-size: 13px;
+  }
+  .locations-info-window__title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .locations-info-window__address {
+    font-size: 14px;
+  }
+  .locations-info-window__locationlink a {
+    font-size: 12px;
+  }
 }
 .locations__header {
   padding-bottom: 50px;
@@ -331,11 +383,6 @@ html, body {
   font-weight: bold;
   display: inline-block;
   margin: 0 10px;
-}
-@media only screen and (max-width: 640px) {
-  .locations__search-options {
-    text-align: center;
-  }
 }
 .gm-style .gm-style-iw {
    width: 280px !important;
