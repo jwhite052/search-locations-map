@@ -86,7 +86,7 @@ function initMap() {
   // initial map settings
   var mapdefaults = {
     center: {lat: 40.0556365, lng: -75.1},
-    zoom: 10
+    zoom: 9
   };
 
   // initalize map
